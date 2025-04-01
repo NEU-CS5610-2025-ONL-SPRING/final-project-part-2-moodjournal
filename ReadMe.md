@@ -1,5 +1,3 @@
-# <img width="649" alt="image" src="https://github.com/user-attachments/assets/c1733031-8e4d-4afd-8090-da1afe2c731c" />
-
 # MoodJournal
 
 MoodJournal is a web-based application that allows users to log their daily moods and journal entries. The application integrates a weather API to provide the current weather conditions at the time of the journal entry. The backend is built using Node.js and Prisma, while the frontend is developed with React.
