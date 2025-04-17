@@ -9,64 +9,76 @@ export default function Login() {
 
   function handleChange(e) {
     const { name, value } = e.target;
-    console.log(`[Login] handleChange: ${name} = ${value}`);
     setForm(prev => ({ ...prev, [name]: value }));
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log('[Login] submitting form:', form);
     try {
       const res = await axios.post('http://localhost:4000/api/login', form, {
         withCredentials: true,
       });
-      console.log('[Login] response:', res);
-      console.log('[Login] navigation to /dashboard');
       navigate('/dashboard');
     } catch (err) {
-      console.error('[Login] error:', err);
       const errMsg = err.response?.data?.message || 'Login failed';
-      console.log('[Login] setting error message:', errMsg);
       setMessage(errMsg);
     }
   }
 
   return (
-    <div>
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          name="email"
-          type="email"
-          placeholder="Email"
-          value={form.email}
-          onChange={handleChange}
-          required
-        />
-        <input
-          name="password"
-          type="password"
-          placeholder="Password"
-          value={form.password}
-          onChange={handleChange}
-          required
-        />
-        <button type="submit">Login</button>
-      </form>
+    <div className="h-screen w-full bg-gradient-to-b from-sky-200 to-blue-100 flex flex-col relative overflow-hidden">
+      {/* Sun & Clouds */}
+      <div className="absolute top-[-5%] left-[10%] w-40 h-40 bg-yellow-300 rounded-full shadow-lg animate-bounce-slow z-0" />
+      <div className="absolute top-[15%] right-[5%] w-60 h-40 bg-white rounded-full blur-xl opacity-70 z-0" />
+      <div className="absolute top-[25%] left-[20%] w-40 h-24 bg-white rounded-full blur-md opacity-60 z-0" />
 
-      {/* Button to go to registration page */}
-      <button
-        type="button"
-        onClick={() => {
-          console.log('[Login] navigate to /register');
-          navigate('/register');
-        }}
-        style={{ marginTop: '1rem' }}
-      >
-        Register
-      </button>
+      {/* Title */}
+      <h1 className="text-5xl font-bold text-gray-700 text-center mt-12 z-10">Mood Journal</h1>
 
-      {message && <p>{message}</p>}
+      {/* Login Card */}
+      <div className="flex-grow flex items-end justify-center pb-20 z-10">
+        <div className="bg-white p-8 rounded-2xl shadow-xl w-[90%] max-w-md">
+          <h2 className="text-2xl font-semibold mb-4 text-center text-gray-800">Welcome Back</h2>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <input
+              name="email"
+              type="email"
+              placeholder="Email"
+              value={form.email}
+              onChange={handleChange}
+              required
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-400"
+            />
+            <input
+              name="password"
+              type="password"
+              placeholder="Password"
+              value={form.password}
+              onChange={handleChange}
+              required
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-400"
+            />
+            <button
+              type="submit"
+              className="w-full bg-gradient-to-r from-sky-400 to-blue-500 text-white py-2 rounded-lg font-semibold hover:opacity-90 transition"
+            >
+              Login
+            </button>
+          </form>
+
+          <button
+            type="button"
+            onClick={() => navigate('/register')}
+            className="w-full mt-4 text-sky-600 underline hover:text-sky-800 transition"
+          >
+            New here? Register
+          </button>
+
+          {message && (
+            <p className="text-red-500 text-sm text-center mt-3">{message}</p>
+          )}
+        </div>
+      </div>
     </div>
   );
 }
