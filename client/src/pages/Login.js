@@ -15,9 +15,13 @@ export default function Login() {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:4000/api/login', form, {
-        withCredentials: true,
-      });
+      const res = await axios.post(
+        `${process.env.REACT_APP_API_URL}/api/login`, 
+        form, 
+        {
+          withCredentials: true,
+        }
+      );
       navigate('/dashboard');
     } catch (err) {
       const errMsg = err.response?.data?.message || 'Login failed';

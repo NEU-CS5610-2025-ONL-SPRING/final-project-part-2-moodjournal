@@ -12,9 +12,13 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:4000/api/register', form, {
-        withCredentials: true,
-      });
+      const res = await axios.post(
+        `${process.env.REACT_APP_API_URL}/api/register`,
+        form,
+        {
+          withCredentials: true,
+        }
+      );
       setMessage(res.data.message);
     } catch (err) {
       setMessage(err.response?.data?.message || 'Registration failed');

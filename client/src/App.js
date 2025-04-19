@@ -17,8 +17,8 @@ function ProtectedRoute({ children }) {
   const loc = useLocation();
 
   useEffect(() => {
-    console.log('[ProtectedRoute] ping:', 'http://localhost:4000/ping');
-    axios.get('http://localhost:4000/ping')
+    console.log('[ProtectedRoute] ping:', `${process.env.REACT_APP_API_URL}/ping`);
+    axios.get(`${process.env.REACT_APP_API_URL}/ping`)
       .then(() => {
         console.log('[ProtectedRoute] ping success');
         setOk(true);

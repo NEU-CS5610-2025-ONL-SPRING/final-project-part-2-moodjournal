@@ -8,17 +8,27 @@ export default function Dashboard() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get('http://localhost:4000/api/journal', { withCredentials: true })
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/api/journal`, { withCredentials: true })
       .then(res => setEntries(res.data))
       .catch(() => setMessage('Failed to load entries'));
   }, []);
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:4000/api/journal/${id}`, { withCredentials: true });
+      await axios.delete(`${process.env.REACT_APP_API_URL}/api/journal/${id}`, { withCredentials: true });
       setEntries(prev => prev.filter(e => e.entry_id !== id));
     } catch {
       setMessage('Delete failed');
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      await axios.post(`${process.env.REACT_APP_API_URL}/api/logout`, {}, { withCredentials: true });
+      navigate('/login');
+    } catch (err) {
+      console.error('Logout failed', err);
     }
   };
 
@@ -41,7 +51,7 @@ export default function Dashboard() {
       }}
     >
       <div className="w-full max-w-4xl bg-white/80 backdrop-blur-md rounded-lg p-6 shadow-lg mt-10">
-      <header className="flex items-center justify-between mb-6">
+        <header className="flex items-center justify-between mb-6">
           <h1 className="text-3xl font-bold text-gray-800">Your Journal</h1>
           <div className="flex gap-4">
             <button
@@ -51,14 +61,7 @@ export default function Dashboard() {
               ＋ New Entry
             </button>
             <button
-              onClick={async () => {
-                try {
-                  await axios.post('http://localhost:4000/api/logout', {}, { withCredentials: true });
-                  navigate('/login');
-                } catch (err) {
-                  console.error('Logout failed', err);
-                }
-              }}
+              onClick={handleLogout}
               className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded shadow"
             >
               Logout
@@ -66,16 +69,8 @@ export default function Dashboard() {
           </div>
         </header>
 
-          <h1 className="text-3xl font-bold text-gray-800">Your Journal</h1>
-          <button
-            onClick={() => navigate('/create')}
-            className="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded shadow"
-          >
-            ＋ New Entry
-          </button>
-  
         {message && <div className="mb-4 text-red-600">{message}</div>}
-  
+
         <ul>
           {entries.map(e => (
             <li
@@ -110,5 +105,4 @@ export default function Dashboard() {
       </div>
     </div>
   );
-  
 }

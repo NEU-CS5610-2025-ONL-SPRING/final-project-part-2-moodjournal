@@ -10,11 +10,17 @@ export default function EditEntry() {
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    axios.get('http://localhost:4000/api/journal/moods')
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/api/journal/moods`, {
+        withCredentials: true,
+      })
       .then(res => setMoods(res.data))
       .catch(() => setMessage('Failed to load moods'));
 
-    axios.get(`http://localhost:4000/api/journal/${id}`)
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/api/journal/${id}`, {
+        withCredentials: true,
+      })
       .then(res => {
         const e = res.data;
         setForm({ title: e.title, content: e.content, mood_id: e.mood_id });
@@ -29,7 +35,9 @@ export default function EditEntry() {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:4000/api/journal/${id}`, form);
+      await axios.put(`${process.env.REACT_APP_API_URL}/api/journal/${id}`, form, {
+        withCredentials: true,
+      });
       navigate('/dashboard');
     } catch (err) {
       setMessage(err.response?.data?.message || 'Update failed');
@@ -84,7 +92,9 @@ export default function EditEntry() {
           >
             <option value="">Select Mood</option>
             {moods.map(m => (
-              <option key={m.mood_id} value={m.mood_id}>{m.mood_name}</option>
+              <option key={m.mood_id} value={m.mood_id}>
+                {m.mood_name}
+              </option>
             ))}
           </select>
 
@@ -95,9 +105,7 @@ export default function EditEntry() {
             Save Changes
           </button>
         </form>
-        {message && (
-          <p className="text-center text-red-500 mt-4">{message}</p>
-        )}
+        {message && <p className="text-center text-red-500 mt-4">{message}</p>}
       </div>
     </div>
   );
