@@ -29,7 +29,11 @@ export default function EditEntry() {
   }, [id]);
 
   function handleChange(e) {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setForm({
+      ...form,
+      [name]: name === 'mood_id' ? parseInt(value) : value,
+    });
   }
 
   async function handleSubmit(e) {
