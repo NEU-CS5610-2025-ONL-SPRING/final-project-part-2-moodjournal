@@ -1,13 +1,41 @@
 # MoodJournal
+A full-stack journaling application that allows users to log their thoughts and moods.  
+Built with **React + Tailwind CSS** on the frontend and **Node.js + Express + Prisma** on the backend.
 
-MoodJournal is a web-based application that allows users to log their daily moods and journal entries. The application integrates a weather API to provide the current weather conditions at the time of the journal entry. The backend is built using Node.js and Prisma, while the frontend is developed with React.
+Deployed on **Vercel (Frontend)** and **Render (Backend)**.
+
+---
+
+## Live Demo
+
+- Frontend: [[https://final-project-part-2-moodjournal.vercel.app](https://final-project-part-2-moodjournal.vercel.app/)]
+- Backend: [[https://final-project-part-2-moodjournal.onrender.com](https://final-project-part-2-moodjournal.onrender.com)]
+
+# Tech Stack
+
+### Frontend
+- React
+- React Router
+- Axios
+- Tailwind CSS
+- Vercel (hosting)
+
+### ⚙Backend
+- Node.js + Express
+- Prisma ORM
+- PostgreSQL (Render Database)
+- JWT Authentication (with cookies)
+- Render (hosting)
+
+---
 
 ## Features
-- User authentication (Login/Register/Logout) with JWT-based token authentication.
-- CRUD operations for journal entries.
-- Integration with an external Weather API to fetch and store the current weather.
-- Responsive frontend built with React.
-- PostgreSQL database managed via Prisma ORM.
+
+- User registration and login with JWT cookies
+- Secure routes with middleware protection
+- Create, view, edit, and delete journal entries
+- Weather-based mood suggestions via external API
+- Fully responsive design
 
 ## Project Structure
 ```
