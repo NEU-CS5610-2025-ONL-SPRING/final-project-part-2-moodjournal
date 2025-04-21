@@ -38,31 +38,37 @@ Deployed on **Vercel (Frontend)** and **Render (Backend)**.
 - Fully responsive design
 
 ## Project Structure
-```
-MoodJournal/
-├── api/                # Backend code (Node.js + Prisma)
-│   ├── prisma/        # Database schema
-│   ├── middleware/    # Authentication middleware
-│   ├── routes/        # API routes (auth & journal entries)
-│   ├── utils/         # External API integrations
-│   ├── server.js      # Express app entry point
-│   ├── package.json   # Backend dependencies
-│   └── .env           # Environment variables
+```bash
+final-project-part-2-moodjournal/
+api/
+├── middleware/
+│   └── requireAuth.js              # Middleware to verify JWTs for protected routes
+├── prisma/
+│   ├── migrations/                 # Auto-generated Prisma migration history
+│   └── schema.prisma               # Prisma schema defining the DB models
+├── routes/
+│   ├── auth.js                     # Routes for login and registration
+│   ├── journal.js                  # Routes to get available moods, public entries
+│   └── journalEntry.js             # Routes for creating, editing, deleting user journal entries
+├── utils/
+│   └── fetchWeather.js             # Fetches weather data from external API for entries
+├── .env                            # Environment variables (not committed)
+├── package.json                    # Project dependencies and start script
+├── package-lock.json               # Version lock for npm dependencies
+└── server.js                       # Express entry point, middleware config, route mounting
 │
-├── client/            # Frontend code (React)
-│   ├── public/        # Static files
-│   ├── src/           # Source code
-│   │   ├── pages/     # React pages (Login, Dashboard, etc.)
-│   │   ├── services/  # API utilities
-│   │   ├── App.js     # Root component
-│   │   ├── index.js   # React entry point
-│   │   ├── setupTests.js  # Testing setup
-│   ├── package.json   # Frontend dependencies
-│   └── README.md      # Frontend documentation
+├── client/                     # Frontend (React)
+│   ├── public/                 # Static assets
+│   ├── src/
+│   │   ├── pages/              # React pages: Login, Register, Dashboard, etc.
+│   │   ├── App.js              # Main app component
+│   │   └── index.js            # React entry point
+│   ├── tailwind.config.js      # Tailwind config
+│   ├── .env                    # Frontend API URL (optional)
+│   └── package.json            # Frontend dependencies & scripts
 │
-├── .gitignore         # Ignores node_modules, .env, etc.
-├── README.md          # Project description & deployment info
-```
+├── .gitignore
+├── README.md
 
 ## Prerequisites
 - Node.js installed
@@ -75,6 +81,7 @@ Create a `.env` file in the `api/` folder with the following content:
 DATABASE_URL="postgresql://<username>@localhost:5432/moodjournal?schema=public"
 JWT_SECRET="<enter your secret>"
 WEATHER_API_KEY="<add your weather api key>"
+CLIENT_URL=<frontend url>
 ```
 
 ## Installation & Running the Project
@@ -106,7 +113,7 @@ WEATHER_API_KEY="<add your weather api key>"
    ```
 
 ## Usage
-- Navigate to the frontend URL (usually `http://localhost:3000`).
+- Navigate to the frontend URL 
 - Register or log in to access your mood journal.
 - Create new journal entries, and the current weather will be fetched automatically.
 - View and manage past journal entries.
