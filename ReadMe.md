@@ -13,7 +13,7 @@ Deployed on **Vercel (Frontend)** and **Render (Backend)**.
 
 # Tech Stack
 
-### Frontend
+### Frontend 
 - React
 - React Router
 - Axios
